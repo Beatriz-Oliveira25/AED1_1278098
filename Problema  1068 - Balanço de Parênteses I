@@ -1,0 +1,43 @@
+/* --------------------------------------------------------------------------
+Disciplina  : Algortimo e Estrutura de Dados 2026S1
+Nome        : Beatriz Silva Oliveira
+Linguagem   : C
+Problema    : https://judge.beecrowd.com/pt/problems/view/1068
+Data        : 31/08/2026
+Objetivo    : Dizer se a quantidade de parenteses está correta ou não
+Dificuldade : Eu acho que eu errei coisas bestas ao longo do código, e que eu tlvz não esteja usando o conteúdo da sua aula, mas consegui fazer dar certo
+Uso de IA   : Eu usei IA para conferir o que estava fazendo errado dps de muito tempo de teste, pq ele estava contando um a mais de cada
+-------------------------------------------------------------------------- */
+
+#include <stdio.h>
+
+
+int main(){
+    int c;
+    char string[1000];
+    //se o dado digitado for 0, o programa não lerá mais expressões e terminará o programa
+    while(fgets(string, 1000, stdin) != NULL){
+        int abertos = 0, fechados = 0;
+        
+        for(c=0; c<1000 && string[c]!='\0'; c++){
+            if(string[c]=='('){
+                abertos++;
+            }
+            else if (string[c]==')'){
+                fechados++;
+            }
+            if(fechados>abertos){
+                break;
+            }
+        }
+        if(abertos==fechados){
+            printf("correct\n");
+        }
+        else{
+            printf("incorrect\n");
+        }
+        string[0]='\0';
+    }
+
+    return 0;
+}
