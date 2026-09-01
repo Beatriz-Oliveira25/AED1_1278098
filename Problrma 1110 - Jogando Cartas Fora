@@ -1,0 +1,65 @@
+/* --------------------------------------------------------------------------
+Disciplina  : Algortimo e Estrutura de Dados 2026S1
+Nome        : Beatriz Silva Oliveira
+Linguagem   : C
+Problema    : https://judge.beecrowd.com/pt/problems/view/1110
+Data        : 31/08/2026
+Objetivo    : Imprimir as cartas descartadas e a que sobrou na pilha
+Dificuldade : não consegui muito bem desenvolver como resolver as pilhas
+Uso de IA   : utilizei para auxiliar na correção do código ao longo do caminho
+-------------------------------------------------------------------------- */
+
+
+#include <stdio.h>
+
+int main() {
+
+    int n, pilha[105], topo, fim, i;
+    int primeiro;
+
+    while (1) {
+
+        scanf("%d", &n);
+
+        if (n == 0) {
+            break;
+        }
+
+        // Coloca as cartas na pilha
+        for (i = 0; i < n; i++) {
+            pilha[i] = i + 1;
+        }
+
+        topo = 0;
+        fim = n;
+        primeiro = 1;
+
+        printf("Discarded cards:");
+
+        while (fim - topo > 1) {
+
+            // Imprime a carta descartada
+            if (primeiro) {
+                printf(" %d", pilha[topo]);
+                primeiro = 0;
+            }
+            else {
+                printf(", %d", pilha[topo]);
+            }
+
+            // Remove a carta do topo
+            topo++;
+
+            // Move a próxima carta para a base
+            pilha[fim] = pilha[topo];
+            fim++;
+
+            // Remove a carta que acabou de ser movida do topo
+            topo++;
+        }
+
+        printf("\nRemaining card: %d\n", pilha[topo]);
+    }
+
+    return 0;
+}
