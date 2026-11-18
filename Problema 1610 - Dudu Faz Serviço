@@ -1,0 +1,97 @@
+/* --------------------------------------------------------------------------
+Disciplina  : Algortimo e Estrutura de Dados 2026S1
+Nome        : Beatriz Silva Oliveira
+Linguagem   : C
+Problema    : https://judge.beecrowd.com/pt/problems/view/1610
+Data        : 17/11/2026
+Objetivo    : Retornar se uma lista de números tinham loops ou não
+Dificuldade : Demorei um pouco pra entnder como aplicar o DFS
+Uso de IA   : Usei a IA pra adaptipar os meus códigos aos erros que o beecrowd estava dando
+-------------------------------------------------------------------------- */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 10001
+
+int *grafo[MAX];
+int quantidade[MAX];
+int estado[MAX];
+
+// Função para verificar se existe ciclo
+int dfs(int u) {
+
+    estado[u] = 1;
+
+    for (int i = 0; i < quantidade[u]; i++) {
+
+        int v = grafo[u][i];
+
+        if (estado[v] == 1) {
+            return 1;
+        }
+
+        if (estado[v] == 0) {
+            if (dfs(v)) {
+                return 1;
+            }
+        }
+    }
+
+    estado[u] = 2;
+
+    return 0;
+}
+
+int main(){
+    int T, M, N, A, B;
+    //inteiro T que mostra o número de casos base
+    scanf("%d", &T);
+    for (int i = 0; i<T; i++){
+        //inteiro N(2 ≤ N ≤ 100* ou 2 ≤ N ≤ 104**) - número de documentos existentes
+        // inteiro M (1 ≤ M ≤ 300* ou 1 ≤ M ≤ 3*104 - pendências existentes
+        scanf("%d %d", &N, &M);
+    
+        for (int j = 1; j <= N; j++) {
+            quantidade[j] = 0;
+            estado[j] = 0;
+
+            grafo[j] = malloc((M + 1) * sizeof(int));
+        }
+        for(int j=0; j<M; j++){
+            scanf("%d %d", &A, &B);
+            grafo[A][quantidade[A]] = B;
+            quantidade[A]++;
+            
+        }
+        
+        // Verificação de ciclos
+        int ciclo = 0;
+
+        for (int j = 1; j <= N; j++) {
+
+            if (estado[j] == 0) {
+
+                if (dfs(j)) {
+                    ciclo = 1;
+                    break;
+                }
+            }
+        }
+
+        // Resultado
+        if (ciclo == 1) {
+            printf("SIM\n");
+        }
+        else {
+            printf("NAO\n");
+        }
+
+        // Liberação da memória
+        for (int j = 1; j <= N; j++) {
+            free(grafo[j]);
+        }
+    }
+        
+   return 0;
+}
